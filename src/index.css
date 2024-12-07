@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Kalameh Regular';
+  src: url('./media/fonts/Kalameh-Regular.ttf') format('ttf');
+  font-weight: 400; /* Regular weight */
+  font-style: normal;
+}
+
+<<<<<<< HEAD
+/* استایل های بک گراند */
+.video-wrapper {
+  position: fixed; /* ویدیو ثابت باشد */
+  top: 0;
+  left: 0;
+  width: 100vw; /* عرض کل صفحه */
+  height: 100vh; /* ارتفاع کل صفحه */
+  overflow: hidden; /* حذف محتویات اضافی */
+  z-index: -1; /* زیر دیگر محتوا */
+}
+
+.video-bg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%; /* عرض کامل */
+  height: 100%; /* ارتفاع کامل */
+  object-fit: cover; /* تطبیق ویدیو بدون اعوجاج */
+}
+
+=======
+>>>>>>> 17abf7bae533bf453ce8d2bd3760b65c52609e45
+
+
+*{
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif;
+}
+
+.main{
+  width: 100%;
+  height: 100vh;
+}
+video{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  
+  
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+} */
+
