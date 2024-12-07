@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import phoneIcon from "../media/icons/phone_6416393.png";
 
-const NumericInput = () => {
+const NumericInput = ({ onSubmit }) => {  // دریافت onSubmit از والد
   const [phoneNumber, setPhoneNumber] = useState("");
   const phonePattern = /^09\d{9}$/;
 
@@ -26,6 +26,7 @@ const NumericInput = () => {
       return;
     }
     console.log("شماره تلفن ارسال شد:", cleanedPhone);
+    onSubmit();  // فراخوانی onSubmit برای تغییر وضعیت در Main
   };
 
   const isButtonEnabled = phonePattern.test(phoneNumber.replace(/\s/g, ""));
@@ -73,11 +74,10 @@ const NumericInput = () => {
         <div className="flex justify-center items-center space-x-4">
           <motion.button
             onClick={handleSubmit}
-            className={`group relative flex justify-center py-2 px-20 font-kalameh border border-gray-300 border-opacity-50 text-sm font-medium rounded-md text-white ${
-              isButtonEnabled
+            className={`group relative flex justify-center py-2 px-20 font-kalameh border border-gray-300 border-opacity-50 text-sm font-medium rounded-md text-white ${isButtonEnabled
                 ? "bg-gradient-to-l from-customBlueLight to-customBlueDark hover:bg-gradient-to-r"
                 : "bg-slate-400 cursor-not-allowed"
-            } focus:outline-none focus:ring-1 transition-colors duration-300`}
+              } focus:outline-none focus:ring-1 transition-colors duration-300`}
             whileHover={isButtonEnabled ? { scale: 1.23 } : {}}
             whileTap={isButtonEnabled ? { scale: 0.98 } : {}}
           >
