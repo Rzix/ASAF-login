@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import keyPhone from "../media/icons/key_17489768.png";
 import { motion } from "framer-motion";
 
-const CodeSender = () => {
-    const savedState = JSON.parse(localStorage.getItem('codeSenderState')) || {
+const CodeSender = ({ phoneNumber }) => {
+    const savedState = JSON.parse(localStorage.getItem(`codeSenderState_${phoneNumber}`)) || {
         code: "",
         timer: 60,
         isCodeExpired: false,
@@ -15,13 +15,14 @@ const CodeSender = () => {
 
     const codePattern = /^\d{5}$/;
 
-    
     useEffect(() => {
+        
+        localStorage.setItem(`codeSenderState_${phoneNumber}`, JSON.stringify(state));
+
         if (state.timer > 0) {
             const interval = setInterval(() => {
                 setState((prev) => {
                     const newState = { ...prev, timer: prev.timer - 1 };
-                    localStorage.setItem('codeSenderState', JSON.stringify(newState));
                     return newState;
                 });
             }, 1000);
@@ -29,11 +30,11 @@ const CodeSender = () => {
         } else {
             setState((prev) => {
                 const newState = { ...prev, isCodeExpired: true };
-                localStorage.setItem('codeSenderState', JSON.stringify(newState));
                 return newState;
             });
         }
-    }, [state.timer]);  
+    }, [state.timer, state, phoneNumber]);
+
     const handleInputChange = (e) => {
         const value = e.target.value;
         if (/^\d*$/.test(value)) {
@@ -44,7 +45,6 @@ const CodeSender = () => {
                     isButtonEnabled: codePattern.test(value),
                     error: "",
                 };
-                localStorage.setItem('codeSenderState', JSON.stringify(newState));
                 return newState;
             });
         }
@@ -60,7 +60,7 @@ const CodeSender = () => {
 
     const handleResendCode = () => {
         if (state.timer > 0) return;
-        
+
         setState((prev) => {
             const newState = {
                 ...prev,
@@ -69,7 +69,6 @@ const CodeSender = () => {
                 code: "",
                 error: "",
             };
-            localStorage.setItem('codeSenderState', JSON.stringify(newState));
             return newState;
         });
         console.log("کد مجدد ارسال شد");
@@ -77,7 +76,7 @@ const CodeSender = () => {
 
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
-            handleSubmit();  
+            handleSubmit();
         }
     };
 
@@ -86,7 +85,7 @@ const CodeSender = () => {
             <div className="max-w-md sm:max-w-sm space-y-8">
                 <div className="text-end">
                     <h2 className="mt-6 text-3xl font-extrabold text-white font-kalameh">
-                         کد پیامکی
+                        کد پیامکی
                     </h2>
                 </div>
 
@@ -97,7 +96,7 @@ const CodeSender = () => {
                                 type="text"
                                 value={state.code}
                                 onChange={handleInputChange}
-                                onKeyDown={handleKeyDown}  
+                                onKeyDown={handleKeyDown}
                                 maxLength={5}
                                 className="h-12 w-full text-center appearance-none bg-transparent focus:outline-none text-[#a8a8a8] bg-[#dcddde] text-xl font-kalameh"
                                 placeholder="کد 5 رقمی"
@@ -106,42 +105,46 @@ const CodeSender = () => {
                         </div>
                         <div className="phoneContent w-[20%] rounded-md flex items-center justify-center">
                             <div className="w-8">
-                                <img src={keyPhone} alt="key icon" />
+                                <img src={keyPhone} alt="key" />
                             </div>
                         </div>
                     </div>
-                </div>
-
-                {state.error && <p className="text-red-500 text-center">{state.error}</p>}
-
-                <div className="flex justify-center items-center space-x-4 ">
-                    <div className="flex items-center space-x-2 ">
-                        <a
-                            href="#"
-                            onClick={handleResendCode}
-                            className={`py-2 px-4 bg-[#dbdbdb] rounded-lg text-[#6b6b6b] font-kalameh text-sm `}
-                            disabled={state.timer > 0}
+                    {state.error && <p className="text-red-500">{state.error}</p>}
+                    <div className="flex justify-center items-center space-x-4 pt-5">
+                        <div className="flex items-center space-x-2">
+                            <a
+                                href="#"
+                                onClick={handleResendCode}
+                                className={`py-2 px-4 bg-[#dbdbdb] rounded-lg text-[#6b6b6b] font-kalameh text-sm ${state.timer > 0 ? "cursor-not-allowed" : ""
+                                    }`}
+                                disabled={state.timer > 0}
+                            >
+                                ارسال مجدد کد&nbsp;&nbsp;&nbsp;
+                                {state.timer > 0 ? (
+                                    <span className="text-black font-semibold border-r-2 border-[#72bef6]">
+                                        &nbsp;&nbsp;&nbsp;00:{String(state.timer).padStart(2, "0")}
+                                    </span>
+                                ) : (
+                                    <span className="text-red-500 font-bold">ارسال مجدد</span>
+                                )}
+                            </a>
+                        </div>
+                        <motion.button
+                            onClick={handleSubmit}
+                            disabled={!state.isButtonEnabled}
+                            className={`group relative flex justify-center py-2 px-10 font-kalameh border border-gray-300 border-opacity-50 text-sm font-medium rounded-md text-white ${state.isButtonEnabled
+                                ? "bg-gradient-to-l from-customBlueLight to-customBlueDark hover:bg-gradient-to-r"
+                                : "bg-slate-400 cursor-not-allowed"
+                                } focus:outline-none focus:ring-1 transition-colors duration-300`}
+                            whileHover={state.isButtonEnabled ? { scale: 1.23 } : {}}
+                            whileTap={state.isButtonEnabled ? { scale: 0.98 } : {}}
                         >
-                            ارسال مجدد کد&nbsp;&nbsp;&nbsp;
-                            {state.isCodeExpired ? (
-                                <span className="text-red-500 font-bold"><br />کد منقضی شد</span>
-                            ) : (
-                                <span className="text-black font-semibold  border-r-2 border-[#72bef6] ">&nbsp;&nbsp;&nbsp;00:{String(state.timer).padStart(2, '0')}</span>
-                            )}
-                        </a>
+                            ارسال کد
+                        </motion.button>
+
+
                     </div>
-                    <motion.button
-                        onClick={handleSubmit}
-                        className={`group relative flex justify-center py-2 px-10 font-kalameh border border-gray-300 border-opacity-50 text-sm font-medium rounded-md text-white ${state.isButtonEnabled
-                            ? "bg-gradient-to-l from-customBlueLight to-customBlueDark hover:bg-gradient-to-r"
-                            : "bg-slate-400 cursor-not-allowed"
-                            } focus:outline-none focus:ring-1 transition-colors duration-300`}
-                        whileHover={state.isButtonEnabled ? { scale: 1.23 } : {}}
-                        whileTap={state.isButtonEnabled ? { scale: 0.98 } : {}}
-                        disabled={!state.isButtonEnabled}
-                    >
-                        ورود
-                    </motion.button>
+
                 </div>
             </div>
         </div>
