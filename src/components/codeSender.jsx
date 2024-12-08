@@ -15,7 +15,7 @@ const CodeSender = () => {
 
     const codePattern = /^\d{5}$/;
 
-    // شروع تایمر زمانی که کامپوننت mount می‌شود
+    
     useEffect(() => {
         if (state.timer > 0) {
             const interval = setInterval(() => {
@@ -33,8 +33,7 @@ const CodeSender = () => {
                 return newState;
             });
         }
-    }, [state.timer]);  // زمانی که timer تغییر می‌کند، این effect اجرا می‌شود
-
+    }, [state.timer]);  
     const handleInputChange = (e) => {
         const value = e.target.value;
         if (/^\d*$/.test(value)) {
@@ -78,7 +77,7 @@ const CodeSender = () => {
 
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
-            handleSubmit();  // اگر Enter فشرده شد، متد handleSubmit اجرا می‌شود
+            handleSubmit();  
         }
     };
 

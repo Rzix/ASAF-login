@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import phoneIcon from "../media/icons/phone_6416393.png";
 
-const NumericInput = ({ onSubmit }) => {  // دریافت onSubmit از والد
+const NumericInput = ({ onSubmit }) => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const phonePattern = /^09\d{9}$/;
 
@@ -22,11 +22,12 @@ const NumericInput = ({ onSubmit }) => {  // دریافت onSubmit از والد
 
   const handleSubmit = () => {
     const cleanedPhone = phoneNumber.replace(/\s/g, "");
-    if (!phonePattern.test(cleanedPhone)) {
-      return;
+    if (phonePattern.test(cleanedPhone)) {
+      console.log("شماره تلفن معتبر است:", cleanedPhone);
+      onSubmit(cleanedPhone); // ارسال شماره به والد
+    } else {
+      alert("شماره تلفن معتبر نیست!");
     }
-    console.log("شماره تلفن ارسال شد:", cleanedPhone);
-    onSubmit();  // فراخوانی onSubmit برای تغییر وضعیت در Main
   };
 
   const isButtonEnabled = phonePattern.test(phoneNumber.replace(/\s/g, ""));
