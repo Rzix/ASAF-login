@@ -1,14 +1,19 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; 
 import NumericInput from "./validator";
 import CodeSender from "./codeSender";
 import LogoAndContent from "./logoAndContent";
 import videoSrc from "../media/videos/Glowing clean_horizontal.mp4";
 
+
 function Main() {
     const [currentStep, setCurrentStep] = useState("phone"); 
     const [phoneNumber, setPhoneNumber] = useState(""); 
+    const navigate = useNavigate(); 
+
     const handlePhoneSubmit = (phone) => {
         setPhoneNumber(phone); 
+        navigate(`/login/${phone}`); 
         setCurrentStep("code");
     };
 
@@ -39,3 +44,4 @@ function Main() {
 }
 
 export default Main;
+

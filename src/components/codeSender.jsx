@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import keyPhone from "../media/icons/key_17489768.png";
+import { useParams } from "react-router-dom"; 
 import { motion } from "framer-motion";
 
 const CodeSender = ({ phoneNumber }) => {
+    
     const savedState = JSON.parse(localStorage.getItem(`codeSenderState_${phoneNumber}`)) || {
         code: "",
         timer: 60,
@@ -15,25 +17,24 @@ const CodeSender = ({ phoneNumber }) => {
 
     const codePattern = /^\d{5}$/;
 
+    
     useEffect(() => {
-        
         localStorage.setItem(`codeSenderState_${phoneNumber}`, JSON.stringify(state));
+    }, [state, phoneNumber]);
 
+    
+    useEffect(() => {
         if (state.timer > 0) {
             const interval = setInterval(() => {
-                setState((prev) => {
-                    const newState = { ...prev, timer: prev.timer - 1 };
-                    return newState;
-                });
+                setState((prev) => ({ ...prev, timer: prev.timer - 1 }));
             }, 1000);
+
             return () => clearInterval(interval);
-        } else {
-            setState((prev) => {
-                const newState = { ...prev, isCodeExpired: true };
-                return newState;
-            });
+        } else if (!state.isCodeExpired) {
+            setState((prev) => ({ ...prev, isCodeExpired: true }));
         }
-    }, [state.timer, state, phoneNumber]);
+    }, [state.timer]);
+
 
     const handleInputChange = (e) => {
         const value = e.target.value;
