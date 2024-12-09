@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { FaArrowRight } from "react-icons/fa";
 import { motion } from "framer-motion";
-import phoneIcon from "../media/icons/phone_6416393.png";
+
 
 const NumericInput = ({ onSubmit }) => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const phonePattern = /^09\d{9}$/;
-  const [isHovered, setIsHovered] = useState(false);
+  
 
   const formatPhoneNumber = (value) => {
     const cleaned = value.replace(/\D/g, "");
@@ -26,7 +25,7 @@ const NumericInput = ({ onSubmit }) => {
     const cleanedPhone = phoneNumber.replace(/\s/g, "");
     if (phonePattern.test(cleanedPhone)) {
       console.log("شماره تلفن معتبر است:", cleanedPhone);
-      onSubmit(cleanedPhone); // ارسال شماره به والد
+      onSubmit(cleanedPhone); 
     } else {
       alert("شماره تلفن معتبر نیست!");
     }
@@ -68,7 +67,7 @@ const NumericInput = ({ onSubmit }) => {
               />
               <div className="phoneContent w-[20%] rounded-md flex items-center justify-center ">
                 <div className="w-8">
-                  <img src={phoneIcon} alt="Phone icon" />
+                  <img src="/media/icons/phone_6416393.png" alt="Phone icon" />
                 </div>
               </div>
             </div>

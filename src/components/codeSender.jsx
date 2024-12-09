@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import keyPhone from "../media/icons/key_17489768.png";
-import { useParams } from "react-router-dom"; 
 import { motion } from "framer-motion";
 
 const CodeSender = ({ phoneNumber }) => {
@@ -106,7 +104,7 @@ const CodeSender = ({ phoneNumber }) => {
                         </div>
                         <div className="phoneContent w-[20%] rounded-md flex items-center justify-center">
                             <div className="w-8">
-                                <img src={keyPhone} alt="key" />
+                                <img src="/media/icons/key_17489768.png" alt="key" />
                             </div>
                         </div>
                     </div>
@@ -126,7 +124,7 @@ const CodeSender = ({ phoneNumber }) => {
                                         &nbsp;&nbsp;&nbsp;00:{String(state.timer).padStart(2, "0")}
                                     </span>
                                 ) : (
-                                    <span className="text-red-500 font-bold">ارسال مجدد</span>
+                                    <span className="text-red-500 font-bold font-kalameh ">ارسال مجدد</span>
                                 )}
                             </a>
                         </div>
