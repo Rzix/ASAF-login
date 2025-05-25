@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
 
 const CodeSender = ({ phoneNumber }) => {
     
@@ -128,20 +127,16 @@ const CodeSender = ({ phoneNumber }) => {
                                 )}
                             </a>
                         </div>
-                        <motion.button
+                        <button
                             onClick={handleSubmit}
                             disabled={!state.isButtonEnabled}
                             className={`group relative flex justify-center py-2 px-10 font-kalameh border border-gray-300 border-opacity-50 text-sm font-medium rounded-md text-white ${state.isButtonEnabled
                                 ? "bg-gradient-to-l from-customBlueLight to-customBlueDark hover:bg-gradient-to-r"
                                 : "bg-slate-400 cursor-not-allowed"
                                 } focus:outline-none focus:ring-1 transition-colors duration-300`}
-                            whileHover={state.isButtonEnabled ? { scale: 1.23 } : {}}
-                            whileTap={state.isButtonEnabled ? { scale: 0.98 } : {}}
                         >
                             ارسال کد
-                        </motion.button>
-
-
+                        </button>
                     </div>
 
                 </div>
